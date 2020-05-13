@@ -7,7 +7,7 @@ export default {
     destination: path.resolve(__dirname, '..', '..', 'tmp'),
     filename(request, file, callback) {
       const fileHash = crypto.randomBytes(10).toString('HEX');
-      const fileName = `${fileHash}-${file.filename}`;
+      const fileName = `${fileHash}-${file.originalname}`;
 
       return callback(null, fileName);
     },

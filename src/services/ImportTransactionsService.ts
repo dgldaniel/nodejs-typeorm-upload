@@ -1,8 +1,13 @@
+import { getCustomRepository } from 'typeorm';
+
 import csvParse from 'csv-parse';
 import fs from 'fs';
 
 import Transaction from '../models/Transaction';
-import CreateTransactionService from './CreateTransactionService';
+import Category from '../models/Category';
+
+import CategoriesRepository from '../repositories/CategoriesRepository';
+import TransactionsRepository from '../repositories/TransactionsRepository';
 
 interface Request {
   path: string;
@@ -17,17 +22,62 @@ interface TransactionCSV {
 
 class ImportTransactionsService {
   public async execute({ path: csvFilePath }: Request): Promise<Transaction[]> {
-    const createTransaction = new CreateTransactionService();
+    const transactionRepository = getCustomRepository(TransactionsRepository);
+    const categoryRepository = getCustomRepository(CategoriesRepository);
 
     const dataFromCSV = await this.loadCSV(csvFilePath);
 
-    const transactions = dataFromCSV.map(transaction =>
-      createTransaction.execute(transaction),
-    );
+    const allCategories = await categoryRepository.find();
 
-    const newTransactions = await Promise.all(transactions);
+    const categories = dataFromCSV
+      .map(transaction => {
+        const categoryFound = allCategories.find(
+          category => category.title === transaction.category,
+        );
 
-    return newTransactions;
+        if (!categoryFound) {
+          return transaction.category;
+        }
+
+        return null;
+      })
+      .filter(category => !!category) as string[];
+
+    const categoriesUniq = Array.from(new Set(categories));
+
+    let newCategories = categoriesUniq.map(category => {
+      const newCategory = new Category();
+
+      newCategory.title = category;
+
+      return newCategory;
+    });
+
+    newCategories = categoryRepository.create(newCategories);
+
+    await categoryRepository.save(newCategories);
+
+    const newAllCategories = await categoryRepository.find();
+
+    let newTransactions = dataFromCSV.map(transaction => {
+      const newTransaction = new Transaction();
+
+      const categoryFound = newAllCategories.find(
+        category => category.title === transaction.category,
+      ) as Category;
+
+      newTransaction.title = transaction.title;
+      newTransaction.value = transaction.value;
+      newTransaction.type = transaction.type;
+      newTransaction.category_id = categoryFound.id;
+
+      return newTransaction;
+    });
+
+    newTransactions = transactionRepository.create(newTransactions);
+    const newTransactionsSaved = transactionRepository.save(newTransactions);
+
+    return newTransactionsSaved;
   }
 
   private async loadCSV(filePath: string): Promise<TransactionCSV[]> {
