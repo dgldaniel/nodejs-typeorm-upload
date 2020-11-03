@@ -89,6 +89,7 @@ In other terminal, run:
 
     $ yarn dev:server
     
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Typeorm-Upload&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fdgldaniel%2Ftypeorm-upload%2Fmaster%2Ftypeorm-upload-insomnia.json)
 
 ### Create a transaction - **`POST /transactions`**:
  
@@ -103,9 +104,9 @@ Request example:
 }
 ```
 
-### List transactions - **`GET /transactions`**:
+### List transactions - **`GET /transactions`**
  
-### Delete a transaction - **`DELETE /transactions/:id`**:
+### Delete a transaction - **`DELETE /transactions/:id`**
 
 ### Import a file csv - **`POST /transactions`**:
 
