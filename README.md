@@ -77,7 +77,7 @@ If the container is not running, start the service:
 
 Create "gostack_desafio06" and "gostack_desafio06_tests" database using some Postgres service (PostBird, Pgadmin...)
 
-Check that the database credentials in the file are correct in 'ormconfig.json'.
+Check that the database credentials in the file are correct in "ormconfig.json".
 
 With the Postgre service turned on, migrate with the command:
 
@@ -91,7 +91,7 @@ In other terminal, run:
     
 [![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Typeorm-Upload&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fdgldaniel%2Ftypeorm-upload%2Fmaster%2Ftypeorm-upload-insomnia.json)
 
-### Create a transaction - **`POST /transactions`**:
+**Create a transaction** - **`POST /transactions`**:
  
 Request example:
 
@@ -104,11 +104,11 @@ Request example:
 }
 ```
 
-### List transactions - **`GET /transactions`**
+**List transactions** - **`GET /transactions`**
  
-### Delete a transaction - **`DELETE /transactions/:id`**
+**Delete a transaction** - **`DELETE /transactions/:id`**
 
-### Import a file csv - **`POST /transactions`**:
+**Import a file csv** - **`POST /transactions`**:
 
 Use file.csv on root directory and import using Multipart with "file" key
 
