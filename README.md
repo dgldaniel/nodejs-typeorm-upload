@@ -62,17 +62,17 @@ After installing node, this project will need yarn too, so just run the followin
 After installing, run this command on the terminal:
 
       $ docker run --name <some-name> -e POSTGRES_PASSWORD=docker -p <some-port>:5432 -d postgres
-      
+
 If the container is not running, start the service:
-  
+
       $ docker start <container-name>
-      
+
 ## Install
 
-    $ git clone https://github.com/dgldaniel/typeorm-upload.git
-    $ cd typeorm-upload
-    $ yarn install
-      
+    $ git clone https://github.com/dgldaniel/nodejs-typeorm-upload.git
+    $ cd nodejs-typeorm-upload
+    $ yarn
+
 ## Configure app
 
 Create "gostack_desafio06" and "gostack_desafio06_tests" database using some Postgres service (PostBird, Pgadmin...)
@@ -82,30 +82,30 @@ Check that the database credentials in the file are correct in "ormconfig.json".
 With the Postgre service turned on, migrate with the command:
 
     $ yarn typeorm migration:run
- 
+
 ## Running the project
 
 In other terminal, run:
 
     $ yarn dev:server
-    
+
 [![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Typeorm-Upload&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fdgldaniel%2Ftypeorm-upload%2Fmaster%2Ftypeorm-upload-insomnia.json)
 
 **Create a transaction** - **`POST /transactions`**:
- 
+
 Request example:
 
 ```json
 {
 	"title": "Patinete Elétrico",
-	"value": 1, 
+	"value": 1,
 	"type": "income",
 	"category": "Radical"
 }
 ```
 
 **List transactions** - **`GET /transactions`**
- 
+
 **Delete a transaction** - **`DELETE /transactions/:id`**
 
 **Import a file csv** - **`POST /transactions`**:
